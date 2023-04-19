@@ -2,6 +2,8 @@ import { Nunito } from "next/font/google";
 
 import "./globals.css";
 import Navbar from "./components/Navbar/Navbar";
+import ClientOnly from "./components/ClientOnly";
+import RegisterModal from "./components/modals/RegisterModal";
 
 export const metadata = {
   title: "Lakbay PH",
@@ -20,8 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar/>
-        {children}
+        <ClientOnly>
+          <RegisterModal/>
+          <Navbar />
+          {children}
+        </ClientOnly>
       </body>
     </html>
   );
