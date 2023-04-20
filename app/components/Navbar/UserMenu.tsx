@@ -6,8 +6,14 @@ import { useCallback, useState } from "react";
 import MenuItem from "./MenuItem";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
+import { signOut } from "next-auth/react";
+import { safeUser } from "@/app/types";
 
-const UserMenu = () => {
+interface UserMenuProps {
+  currentUser?: safeUser | null;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +61,7 @@ const UserMenu = () => {
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar />
+            <Avatar src={currentUser?.image} />
           </div>
         </div>
       </div>
@@ -66,8 +72,8 @@ const UserMenu = () => {
             absolute
             rounded-xl
             shadow-md
-            w-[40vw]
-            md:w/3-4
+            w-[35vw]
+            md:w-3/4
             bg-white
             overflow-hidden
             right-0
@@ -76,8 +82,22 @@ const UserMenu = () => {
           "
         >
           <div className="flex flex-col cursor-pointer">
-            <MenuItem onClick={loginModal.onOpen} label="Login" />
-            <MenuItem onClick={registerModal.onOpen} label="Sign up" />
+            {currentUser ? (
+              <>
+              <MenuItem onClick={() => {}} label="My trips" />
+                <MenuItem onClick={() => {}} label="Favorites" />
+                <MenuItem onClick={() => {}} label="Reservations" />
+                <MenuItem onClick={() => {}} label="Properties" />
+                <MenuItem onClick={() => {}} label="Airbnb your home" />
+                <hr/>
+                <MenuItem onClick={() => signOut()} label="Logout" />
+              </>
+            ) : (
+              <>
+                <MenuItem onClick={loginModal.onOpen} label="Login" />
+                <MenuItem onClick={registerModal.onOpen} label="Sign up" />
+              </>
+            )}
           </div>
         </div>
       )}
