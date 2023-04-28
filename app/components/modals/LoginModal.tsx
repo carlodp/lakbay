@@ -110,10 +110,9 @@ const LoginModal = () => {
               text-neutral-800
               cursor-pointer 
               hover:underline
+              ml-1
             "
-          >
-            {" "}
-            Create an account
+          >Create an account
           </span>
         </p>
       </div>
